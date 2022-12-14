@@ -1,29 +1,16 @@
-FROM golang:1.19-alpine
+FROM node:14
 
-ARG SSH_KEY
-ARG PORT
+# Setting working directory. All the path will be relative to WORKDIR
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
+# Install app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
 
-# Set the Current Working Directory inside the container
-WORKDIR /app
+# Bundle app source
+COPY . /usr/src/app
 
-# Setup the config below to be able to call private repo
-RUN apk add git 
-
-
-RUN git config --global url."git@github.com:".insteadOf "https://github.com/"
-
-#Copy all data from directory to docker
-
-COPY . .
-
-EXPOSE 3000
-
-# Build the Go app
-RUN go build -o main
-
-
-
-CMD ["./main"]
-
-
+EXPOSE 8080
+CMD [ "npm", "start" ]
