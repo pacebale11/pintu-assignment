@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: golang-apps
+    app.kubernetes.io/instance: golang-apps-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: golang-apps-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: golang-apps
+  template:
+    metadata:
+      labels:
+        app: golang-apps
+    spec:
+      containers:
+        - image: 193057370282.dkr.ecr.ap-southeast-1.amazonaws.com/golang-apps:latest
+          imagePullPolicy: Always
+          name: golang-apps
+          ports:
+            - containerPort: 3000

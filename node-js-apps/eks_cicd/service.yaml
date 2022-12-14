@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: golang-apps
+    app.kubernetes.io/instance: golang-apps-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+    app.kubernetes.io/component: backend
+  name: golang-apps
+spec:
+  selector:
+    app: golang-apps
+  type: LoadBalancer
+  ports:
+   -  protocol: TCP
+      port: 80
+      targetPort: 3000
