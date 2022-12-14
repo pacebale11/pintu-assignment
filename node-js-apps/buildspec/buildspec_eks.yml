@@ -14,12 +14,12 @@ phases:
       - echo 'Check kubectl version'
       - kubectl version --short --client
       - ls
-      - chmod +x golang-apps/eks_cicd/prereqs.sh
+      - chmod +x node-js-apps/eks_cicd/prereqs.sh
       - sh node-js-apps/eks_cicd/prereqs.sh
 
   pre_build:
     commands:
-      - cd golang-apps       
+      - cd node-js-apps       
       - awk '{print "echo " $0 " >> .env"}' .env > env.sh && rm .env && sh env.sh
       - cd ..
       - echo Logging in to Amazon EKS...
@@ -38,7 +38,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd golang-apps          
+      - cd node-js-apps          
       - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - cd .. 
@@ -49,8 +49,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - echo Push the latest image to cluster
-      - kubectl apply -f golang-apps/eks_cicd/deployment.yaml
-      - kubectl rollout restart -f golang-apps/eks_cicd/deployment.yaml
+      - kubectl apply -f node-js-apps/eks_cicd/deployment.yaml
+      - kubectl rollout restart -f node-js-apps/eks_cicd/deployment.yaml
 
 
-      

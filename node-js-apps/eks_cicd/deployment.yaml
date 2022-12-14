@@ -2,24 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: golang-apps
-    app.kubernetes.io/instance: golang-apps-instance
+    app.kubernetes.io/name: node-js-apps
+    app.kubernetes.io/instance: node-js-apps-instance
     app.kubernetes.io/version: '1.0.0'
     app.kubernetes.io/managed-by: kubectl
-  name: golang-apps-deployment
+  name: node-js-apps-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: golang-apps
+      app: node-js-apps
   template:
     metadata:
       labels:
-        app: golang-apps
+        app: node-js-apps
     spec:
       containers:
         - image: 193057370282.dkr.ecr.ap-southeast-1.amazonaws.com/golang-apps:latest
           imagePullPolicy: Always
-          name: golang-apps
+          name: node-js-apps
           ports:
-            - containerPort: 3000
+            - containerPort: 8080

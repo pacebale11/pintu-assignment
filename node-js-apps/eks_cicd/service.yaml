@@ -2,17 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/name: golang-apps
-    app.kubernetes.io/instance: golang-apps-instance
+    app.kubernetes.io/name: node-js-apps
+    app.kubernetes.io/instance: node-js-apps-instance
     app.kubernetes.io/version: '1.0.0'
     app.kubernetes.io/managed-by: kubectl
     app.kubernetes.io/component: backend
-  name: golang-apps
+  name: node-js-apps
 spec:
   selector:
-    app: golang-apps
+    app: node-js-apps
   type: LoadBalancer
   ports:
    -  protocol: TCP
       port: 80
-      targetPort: 3000
+      targetPort: 8080
