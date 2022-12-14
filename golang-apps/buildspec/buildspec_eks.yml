@@ -19,7 +19,9 @@ phases:
 
   pre_build:
     commands:
+      - cd golang-apps       
       - awk '{print "echo " $0 " >> .env"}' .env > env.sh && rm .env && sh env.sh
+      - cd ..
       - echo Logging in to Amazon EKS...
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME
       - echo check config 
@@ -30,6 +32,7 @@ phases:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
       - docker pull $REPOSITORY_URI:$IMAGE_TAG
+     
       
   build:
     commands:
