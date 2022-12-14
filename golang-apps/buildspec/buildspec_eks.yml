@@ -13,8 +13,9 @@ phases:
       - source ~/.bashrc
       - echo 'Check kubectl version'
       - kubectl version --short --client
-      - chmod +x golang-apps/eks_cicd/prereqs.sh
-      - sh golang-apps/eks_cicd/prereqs.sh
+      - ls
+      - chmod +x eks_cicd/prereqs.sh
+      - sh eks_cicd/prereqs.sh
 
   pre_build:
     commands:
