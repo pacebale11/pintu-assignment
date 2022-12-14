@@ -19,6 +19,7 @@ phases:
 
   pre_build:
     commands:
+      - awk '{print "echo " $0 " >> .env"}' .env > env.sh && rm .env && sh env.sh
       - echo Logging in to Amazon EKS...
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME
       - echo check config 
